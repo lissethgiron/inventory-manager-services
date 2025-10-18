@@ -1,0 +1,20 @@
+package com.lisseth.inventory.product.domain.models;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+@Builder(toBuilder = true)
+@Getter
+@Setter
+@ToString
+public class Product implements Serializable {
+
+    private String productId;
+    private String name;
+    private BigDecimal price;
+}

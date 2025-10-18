@@ -1,0 +1,28 @@
+package com.lisseth.inventory.common.application.controllers;
+
+import com.lisseth.inventory.common.application.models.JsonApiResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+
+@Slf4j
+@Component
+public class ResponseController {
+
+    public static <T> ResponseEntity<JsonApiResponse<T>> success(String type, String id, T attributes) {
+        log.info("success {} {} {}", type, id, attributes);
+        return ResponseEntity.ok(new JsonApiResponse<>(type, id, attributes));
+    }
+
+    public static  <T> ResponseEntity<JsonApiResponse<T>> successList(String type, List<String> ids, List<T> resources) {
+        return ResponseEntity.ok(new JsonApiResponse<>(type, ids, resources));
+    }
+
+    public static ResponseEntity<JsonApiResponse<Object>> error(String type, int status, Map<String, String> errors) {
+        JsonApiResponse<Object> response = new JsonApiResponse<>(type, status, errors);
+        return ResponseEntity.status(status).body(response);
+    }
+}

@@ -1,4 +1,4 @@
-package com.lisseth.inventory.shared.domain.config;
+package com.lisseth.inventory.common.domain.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

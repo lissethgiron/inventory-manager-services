@@ -1,4 +1,4 @@
-package com.lisseth.inventory.shared.application.controller;
+package com.lisseth.inventory.common.application.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.EntityModel;
@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping(produces = "application/vnd.api+json")
-public class ApplicationController {
+public class PingController {
 
     @GetMapping("/ping")
     public RepresentationModel<?> ping() {
