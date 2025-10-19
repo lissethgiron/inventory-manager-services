@@ -1,5 +1,6 @@
 package com.lisseth.inventory.product.application.controllers;
 
+import com.lisseth.inventory.common.application.controllers.util.JwtUtil;
 import com.lisseth.inventory.common.application.models.JsonApiResponse;
 import com.lisseth.inventory.product.application.models.ProductRequest;
 import com.lisseth.inventory.product.application.models.ProductResponse;
@@ -32,6 +33,8 @@ class createProductControllerTest {
         productController = new CreateProductController(createProductService);
     }
 
+    private final String TOKEN = "Bearer " + JwtUtil.generateToken("admin");
+
     @Test
     void shouldCreateProductWhenDataIsValid() {
         Product product = Product.builder()
@@ -42,7 +45,7 @@ class createProductControllerTest {
 
         when(createProductService.create(any(Product.class))).thenReturn(product);
         final ResponseEntity<JsonApiResponse<ProductResponse>> response = productController
-                .createProduct(buildProductRequest());
+                .createProduct(TOKEN, buildProductRequest());
 
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -51,7 +54,7 @@ class createProductControllerTest {
     @Test
     void shouldReturnExceptionThenThrowPersistenceException() {
         when(createProductService.create(any(Product.class))).thenThrow(PersistenceException.class);
-        assertThrows(PersistenceException.class, () -> productController.createProduct(buildProductRequest()));
+        assertThrows(PersistenceException.class, () -> productController.createProduct(TOKEN, buildProductRequest()));
     }
 
     private ProductRequest buildProductRequest(){

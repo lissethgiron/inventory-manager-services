@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.lisseth.inventory.common.application.controllers.util.JwtUtil.checkAuth;
+
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateProductController {
@@ -23,8 +25,10 @@ public class CreateProductController {
     @Operation(summary = "Service to create products.")
     @PostMapping("/products")
     public ResponseEntity<JsonApiResponse<ProductResponse>> createProduct(
+            @RequestHeader(value="Authorization") String authorization,
             @Valid @RequestBody ProductRequest productRequest
     ) {
+        checkAuth(authorization);
         Product product = createProductService.create(
                 Product.builder()
                         .name(productRequest.getName())

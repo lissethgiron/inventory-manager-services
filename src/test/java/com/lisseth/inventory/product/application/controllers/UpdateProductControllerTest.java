@@ -1,5 +1,6 @@
 package com.lisseth.inventory.product.application.controllers;
 
+import com.lisseth.inventory.common.application.controllers.util.JwtUtil;
 import com.lisseth.inventory.common.application.models.JsonApiResponse;
 import com.lisseth.inventory.product.application.models.ProductRequest;
 import com.lisseth.inventory.product.application.models.ProductResponse;
@@ -33,6 +34,8 @@ class UpdateProductControllerTest {
         updateProductController = new UpdateProductController(updateProductService);
     }
 
+    private final String TOKEN = "Bearer " + JwtUtil.generateToken("admin");
+
     @Test
     void shouldUpdateProductWhenDataIsValidThenReturnProduct() {
         var productId = UUID.randomUUID().toString();
@@ -43,7 +46,7 @@ class UpdateProductControllerTest {
 
         when(updateProductService.update(any(Product.class))).thenReturn(product);
         final ResponseEntity<JsonApiResponse<ProductResponse>> response = updateProductController
-                .updateProduct(productId, buildProductRequest());
+                .updateProduct(TOKEN, productId, buildProductRequest());
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -53,7 +56,7 @@ class UpdateProductControllerTest {
     void shouldReturnExceptionWhenUpdateThenThrowPersistenceException() {var productId = UUID.randomUUID().toString();
         when(updateProductService.update(any(Product.class))).thenThrow(PersistenceException.class);
         assertThrows(PersistenceException.class, () -> updateProductController
-                .updateProduct(productId, buildProductRequest()));
+                .updateProduct(TOKEN, productId, buildProductRequest()));
     }
 
     private ProductRequest buildProductRequest(){

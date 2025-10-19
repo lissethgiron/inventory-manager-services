@@ -1,5 +1,6 @@
 package com.lisseth.inventory.product.application.controllers;
 
+import com.lisseth.inventory.common.application.controllers.util.JwtUtil;
 import com.lisseth.inventory.common.application.models.JsonApiResponse;
 import com.lisseth.inventory.product.domain.ports.input.DeleteProductServicePort;
 import jakarta.persistence.PersistenceException;
@@ -26,12 +27,15 @@ class DeleteProductControllerTest {
         deleteProductController = new DeleteProductController(deleteProductService);
     }
 
+    private final String TOKEN = "Bearer " + JwtUtil.generateToken("admin");
+
     @Test
     void shouldDeleteProductDeleteProductIdIsValidThenReturnTrue() {
         var productId = UUID.randomUUID().toString();
 
         when(deleteProductService.delete(productId)).thenReturn(Boolean.TRUE);
-        final ResponseEntity<JsonApiResponse<Boolean>> response = deleteProductController.deleteProduct(productId);
+        final ResponseEntity<JsonApiResponse<Boolean>> response = deleteProductController.deleteProduct(
+                TOKEN, productId);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -41,6 +45,6 @@ class DeleteProductControllerTest {
     void shouldReturnExceptionWhenDeleteThenThrowPersistenceException() {
         var productId = UUID.randomUUID().toString();
         when(deleteProductService.delete(productId)).thenThrow(PersistenceException.class);
-        assertThrows(PersistenceException.class, () -> deleteProductController.deleteProduct(productId));
+        assertThrows(PersistenceException.class, () -> deleteProductController.deleteProduct(TOKEN, productId));
     }
 }

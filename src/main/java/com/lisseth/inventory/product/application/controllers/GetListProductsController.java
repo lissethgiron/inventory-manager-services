@@ -34,7 +34,6 @@ public class GetListProductsController {
             @RequestParam(value = "pageSize", defaultValue = "5") int pageSize
     ) {
         checkAuth(authorization);
-
         Page<ProductResponse> productsPage = getListProductsService.getAll(page, pageSize);
         List<ProductResponse> products = productsPage.getContent();
         List<String> ids = products.stream()

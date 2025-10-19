@@ -1,5 +1,6 @@
 package com.lisseth.inventory.product.application.controllers;
 
+import com.lisseth.inventory.common.application.controllers.util.JwtUtil;
 import com.lisseth.inventory.common.application.models.JsonApiResponse;
 import com.lisseth.inventory.product.application.models.ProductResponse;
 import com.lisseth.inventory.product.domain.models.Product;
@@ -31,6 +32,8 @@ class GetProductByIdControllerTest {
         getProductByIdController = new GetProductByIdController(getProductByIdService);
     }
 
+    private final String TOKEN = "Bearer " + JwtUtil.generateToken("admin");
+
     @Test
     void shouldGetProductByIdWhenDataIsValidThenReturnProduct() {
         var productId = UUID.randomUUID().toString();
@@ -42,7 +45,7 @@ class GetProductByIdControllerTest {
 
         when(getProductByIdService.getById(productId)).thenReturn(product);
         final ResponseEntity<JsonApiResponse<ProductResponse>> response = getProductByIdController
-                .getProduct(productId);
+                .getProduct(TOKEN, productId);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -52,7 +55,7 @@ class GetProductByIdControllerTest {
     void shouldReturnExceptionWhenGetProductThenThrowPersistenceException() {
         var productId = UUID.randomUUID().toString();
         when(getProductByIdService.getById(productId)).thenThrow(PersistenceException.class);
-        assertThrows(PersistenceException.class, () -> getProductByIdController.getProduct(productId));
+        assertThrows(PersistenceException.class, () -> getProductByIdController.getProduct(TOKEN, productId));
     }
 
 }

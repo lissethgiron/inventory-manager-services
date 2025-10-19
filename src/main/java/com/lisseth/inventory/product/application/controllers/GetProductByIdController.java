@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.lisseth.inventory.common.application.controllers.util.JwtUtil.checkAuth;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -22,8 +25,10 @@ public class GetProductByIdController {
     @Operation(summary = "Service to get products by id")
     @GetMapping("/products/{productId}")
     public ResponseEntity<JsonApiResponse<ProductResponse>> getProduct(
+            @RequestHeader(value="Authorization") String authorization,
             @PathVariable("productId") @Valid String productId
     ) {
+        checkAuth(authorization);
         Product product = getProductByIdService.getById(productId);
         return ResponseController.success("product", product.getProductId(), new ProductResponse(product));
     }
