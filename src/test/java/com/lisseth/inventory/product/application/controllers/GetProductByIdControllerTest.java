@@ -32,7 +32,7 @@ class GetProductByIdControllerTest {
     }
 
     @Test
-    void shouldCreateProductWhenDataIsValid() {
+    void shouldGetProductByIdWhenDataIsValidThenReturnProduct() {
         var productId = UUID.randomUUID().toString();
         Product product = Product.builder()
                 .productId(productId)
@@ -49,7 +49,7 @@ class GetProductByIdControllerTest {
     }
 
     @Test
-    void shouldReturnExceptionThenThrowPersistenceException() {
+    void shouldReturnExceptionWhenGetProductThenThrowPersistenceException() {
         var productId = UUID.randomUUID().toString();
         when(getProductByIdService.getById(productId)).thenThrow(PersistenceException.class);
         assertThrows(PersistenceException.class, () -> getProductByIdController.getProduct(productId));

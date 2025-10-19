@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Builder(toBuilder = true)
+@Builder
 @Getter
 @Setter
 @ToString
