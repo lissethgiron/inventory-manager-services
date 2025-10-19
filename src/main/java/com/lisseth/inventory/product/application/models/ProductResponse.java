@@ -1,6 +1,7 @@
 package com.lisseth.inventory.product.application.models;
 
 import com.lisseth.inventory.product.domain.models.Product;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

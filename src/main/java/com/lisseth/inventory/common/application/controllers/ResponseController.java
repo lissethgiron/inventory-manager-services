@@ -1,6 +1,7 @@
 package com.lisseth.inventory.common.application.controllers;
 
 import com.lisseth.inventory.common.application.models.JsonApiResponse;
+import com.lisseth.inventory.product.application.models.ProductResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -24,8 +25,13 @@ public class ResponseController {
         return ResponseEntity.created(location).body(new JsonApiResponse<>(type, id, attributes));
     }
 
-    public static  <T> ResponseEntity<JsonApiResponse<T>> successList(String type, List<String> ids, List<T> resources) {
-        return ResponseEntity.ok(new JsonApiResponse<>(type, ids, resources));
+    public static  <T> ResponseEntity<JsonApiResponse<List<T>>> successList(
+            String type,
+            List<String> ids,
+            List<T> resources,
+            Map<String, Object> meta
+    ) {
+        return ResponseEntity.ok((JsonApiResponse<List<T>>) new JsonApiResponse<>(type, ids, resources, meta));
     }
 
     public static ResponseEntity<JsonApiResponse<Object>> error(String type, int status, Map<String, String> errors) {

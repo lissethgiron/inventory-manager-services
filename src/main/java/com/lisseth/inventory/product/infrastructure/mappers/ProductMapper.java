@@ -3,6 +3,9 @@ package com.lisseth.inventory.product.infrastructure.mappers;
 import com.lisseth.inventory.product.domain.models.Product;
 import com.lisseth.inventory.product.infrastructure.entities.ProductEntity;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ProductMapper {
