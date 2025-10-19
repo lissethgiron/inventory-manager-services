@@ -15,9 +15,10 @@ public class DeleteProductAdapter implements DeleteProductAdapterPort {
     private final ProductRepository productRepository;
 
     @Override
-    public void delete(String productId) throws PersistenceException {
+    public Boolean delete(String productId) throws PersistenceException {
         try {
             productRepository.deleteById(productId);
+            return Boolean.TRUE;
         } catch (jakarta.persistence.PersistenceException e){
             log.error("save: Error deleting product");
             throw new PersistenceException(e);

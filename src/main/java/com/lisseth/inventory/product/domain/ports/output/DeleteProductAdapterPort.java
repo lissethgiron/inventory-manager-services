@@ -4,5 +4,5 @@ import jakarta.persistence.PersistenceException;
 
 public interface DeleteProductAdapterPort {
 
-    void delete(String productId) throws PersistenceException;
+    Boolean delete(String productId) throws PersistenceException;
 }

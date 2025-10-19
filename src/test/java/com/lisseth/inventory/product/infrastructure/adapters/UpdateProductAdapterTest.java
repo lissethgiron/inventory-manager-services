@@ -10,16 +10,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-class GetProductByIdAdapterTest  {
+class UpdateProductAdapterTest {
 
-    private GetProductByIdAdapter getProductByIdAdapter;
+    private UpdateProductAdapter updateProductAdapter;
 
     @Mock
     private ProductRepository productRepository;
@@ -27,32 +27,30 @@ class GetProductByIdAdapterTest  {
     @BeforeEach
     public void setUp() {
         openMocks(this);
-        getProductByIdAdapter = new GetProductByIdAdapter(productRepository);
+        updateProductAdapter = new UpdateProductAdapter(productRepository);
     }
 
     @Test
-    void shouldGetProductByIdWhenFindThenReturnProduct() {
-        var productId = UUID.randomUUID().toString();
+    void shouldUpdateProductWhenSaveThenReturnProduct() {
         Product product = Product.builder()
-                .productId(productId)
+                .productId(UUID.randomUUID().toString())
                 .name("Pañitos humedos")
-                .price(BigDecimal.valueOf(10000.20))
+                .price(BigDecimal.valueOf(10000))
                 .build();
-
         ProductEntity productEntity = ProductMapper.toEntity(product);
-        final var productEntityOptional = Optional.of(productEntity);
-        when(productRepository.findById(productId)).thenReturn(productEntityOptional);
-        final Optional<Product> productResponse = getProductByIdAdapter.findById(productId);
-        assertNotNull(productResponse);
-        assertTrue(productResponse.isPresent());
-        assertEquals(productResponse.get().getProductId(), productEntityOptional.get().getProductId());
+        when(productRepository.save(any(ProductEntity.class))).thenReturn(productEntity);
+        Product result = updateProductAdapter.save(product);
+
+        assertNotNull(result);
+        assertNotNull(result.getProductId());
+        assertEquals("Pañitos humedos", result.getName());
+        assertEquals(BigDecimal.valueOf(10000), result.getPrice());
     }
 
     @Test
-    void  shouldThrowExceptionWhenFindByIdThenThrowPersistenceException() {
-        var productId = UUID.randomUUID().toString();
-        when(productRepository.findById(productId))
+    void  shouldThrowExceptionWhenSaveThenThrowPersistenceException() {
+        when(productRepository.save(any(ProductEntity.class)))
                 .thenThrow(jakarta.persistence.PersistenceException.class);
-        assertThrows(PersistenceException.class, () -> getProductByIdAdapter.findById(productId));
+        assertThrows(PersistenceException.class, () -> updateProductAdapter.save(Product.builder().build()));
     }
 }

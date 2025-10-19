@@ -22,7 +22,6 @@ public class UpdateProductService implements UpdateProductServicePort {
 
     @Override
     public Product update(Product product) throws PersistenceException, Exception.NotFoundException {
-
         Optional<Product> OptionalProduct = getProductByIdAdapter.findById(product.getProductId());
 
         if (OptionalProduct.isEmpty()) {

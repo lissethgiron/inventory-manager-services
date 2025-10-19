@@ -16,16 +16,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateProductController {
-
     private final UpdateProductServicePort updateProductService;
 
-    @Operation(summary = "Service to create products.")
+    @Operation(summary = "Service to update products.")
     @PutMapping("/products/{productId}")
     public ResponseEntity<JsonApiResponse<ProductResponse>> updateProduct(
             @PathVariable("productId") @Valid String productId,
             @Valid @RequestBody ProductRequest productRequest
     ) {
-
         Product product = updateProductService.update(
                 Product.builder()
                         .productId(productId)

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GetProductByIdController {
-
     private final GetProductByIdServicePort getProductByIdService;
 
     @Operation(summary = "Service to get products by id")

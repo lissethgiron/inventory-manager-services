@@ -25,7 +25,6 @@ public class CreateProductController {
     public ResponseEntity<JsonApiResponse<ProductResponse>> createProduct(
             @Valid @RequestBody ProductRequest productRequest
     ) {
-
         Product product = createProductService.create(
                 Product.builder()
                         .name(productRequest.getName())

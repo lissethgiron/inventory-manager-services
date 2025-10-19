@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,22 +30,22 @@ class CreateProductServiceTest {
 
     @Test
     void shouldCreateProductWhenDataIsValidThenReturnProduct() {
+        var productId = UUID.randomUUID().toString();
         Product product = Product.builder()
                 .name("Pañitos humedos")
                 .price(BigDecimal.valueOf(10000.20))
                 .build();
 
         Product productResponse = Product.builder()
-                .productId("prod_123-123")
+                .productId(productId)
                 .name("Pañitos humedos")
                 .price(BigDecimal.valueOf(10000.20))
                 .build();
-
         when(createProductAdapter.save(product)).thenReturn(productResponse);
         Product productCreated = createProductService.create(product);
 
         assertNotNull(productCreated);
-        assertEquals(productCreated.getProductId(), "prod_123-123");
+        assertEquals(productCreated.getProductId(), productId);
     }
 
     @Test
