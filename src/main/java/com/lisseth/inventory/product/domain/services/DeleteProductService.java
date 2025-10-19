@@ -2,7 +2,8 @@ package com.lisseth.inventory.product.domain.services;
 
 import com.lisseth.inventory.common.domain.config.Exception;
 import com.lisseth.inventory.product.domain.models.Product;
-import com.lisseth.inventory.product.domain.ports.input.GetProductByIdServicePort;
+import com.lisseth.inventory.product.domain.ports.input.DeleteProductServicePort;
+import com.lisseth.inventory.product.domain.ports.output.DeleteProductAdapterPort;
 import com.lisseth.inventory.product.domain.ports.output.GetProductByIdAdapterPort;
 import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
@@ -14,19 +15,23 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class GetProductByIdService implements GetProductByIdServicePort {
+public class DeleteProductService implements DeleteProductServicePort {
 
     private final GetProductByIdAdapterPort getProductByIdAdapter;
+    private final DeleteProductAdapterPort deleteProductAdapter;
 
     @Override
-    public Product getById(String productId) throws PersistenceException, Exception.NotFoundException {
+    public Boolean delete(String productId) throws PersistenceException, Exception.NotFoundException {
         Optional<Product> OptionalProduct = getProductByIdAdapter.findById(productId);
 
         if (OptionalProduct.isEmpty()) {
             log.warn("The product no exist {}", productId);
-            throw new Exception.NotFoundException("The product no exist " +  productId);
+            throw new Exception.NotFoundException("The product no exist " + productId);
         }
 
-        return OptionalProduct.get();
+        deleteProductAdapter.delete(productId);
+
+        return Boolean.TRUE;
     }
+
 }

@@ -25,7 +25,7 @@ public class GetProductByIdAdapter implements GetProductByIdAdapterPort {
             Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);;
             return optionalProductEntity.map(ProductMapper::toDomain);
         } catch (jakarta.persistence.PersistenceException ex){
-            log.error("findById: Error encontrando el producto en BD");
+            log.error("findById: Error getting product");
             throw new PersistenceException(ex);
         }
     }

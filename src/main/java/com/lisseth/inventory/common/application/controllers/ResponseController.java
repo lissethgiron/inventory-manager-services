@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,12 @@ public class ResponseController {
     public static <T> ResponseEntity<JsonApiResponse<T>> success(String type, String id, T attributes) {
         log.info("success {} {} {}", type, id, attributes);
         return ResponseEntity.ok(new JsonApiResponse<>(type, id, attributes));
+    }
+
+    public static <T> ResponseEntity<JsonApiResponse<T>> created(String type, String id, T attributes) {
+        log.info("created {} {} {}", type, id, attributes);
+        URI location = URI.create("/products/" + id);
+        return ResponseEntity.created(location).body(new JsonApiResponse<>(type, id, attributes));
     }
 
     public static  <T> ResponseEntity<JsonApiResponse<T>> successList(String type, List<String> ids, List<T> resources) {

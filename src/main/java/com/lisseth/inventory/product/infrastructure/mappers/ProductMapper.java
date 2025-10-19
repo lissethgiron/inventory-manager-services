@@ -2,12 +2,9 @@ package com.lisseth.inventory.product.infrastructure.mappers;
 
 import com.lisseth.inventory.product.domain.models.Product;
 import com.lisseth.inventory.product.infrastructure.entities.ProductEntity;
-import lombok.extern.slf4j.Slf4j;
 
-import java.util.Objects;
 import java.util.UUID;
 
-@Slf4j
 public class ProductMapper {
 
     private ProductMapper() {
@@ -23,8 +20,17 @@ public class ProductMapper {
         return productEntity;
     }
 
+    public static ProductEntity toEntityUpdate(Product entity) {
+        ProductEntity productEntity = new ProductEntity();
+
+        productEntity.setProductId(entity.getProductId());
+        productEntity.setName(entity.getName());
+        productEntity.setPrice(entity.getPrice());
+
+        return productEntity;
+    }
+
     public static Product toDomain(ProductEntity entity) {
-        log.info("toDomain product entity {}", entity.getProductId());
         return Product.builder()
                 .productId(entity.getProductId())
                 .name(entity.getName())
