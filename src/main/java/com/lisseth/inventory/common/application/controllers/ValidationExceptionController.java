@@ -16,7 +16,9 @@ import java.util.Map;
 public class ValidationExceptionController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<JsonApiResponse<Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<JsonApiResponse<Object>> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
@@ -35,5 +37,15 @@ public class ValidationExceptionController {
         error.put("detail", ex.getMessage());
 
         return ResponseController.error("validate-error", HttpStatus.NOT_FOUND.value(), error);
+    }
+
+    @ExceptionHandler(Exception.UnauthorizedException.class)
+    public ResponseEntity<JsonApiResponse<Object>> handleUnauthorizedException(Exception.UnauthorizedException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("status", String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+        error.put("title", "Unauthorized");
+        error.put("detail", ex.getMessage());
+
+        return ResponseController.error("validate-error", HttpStatus.UNAUTHORIZED.value(), error);
     }
 }

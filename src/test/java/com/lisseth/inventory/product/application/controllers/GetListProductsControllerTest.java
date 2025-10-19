@@ -1,5 +1,6 @@
 package com.lisseth.inventory.product.application.controllers;
 
+import com.lisseth.inventory.common.application.controllers.util.JwtUtil;
 import com.lisseth.inventory.common.application.models.JsonApiResponse;
 import com.lisseth.inventory.product.application.models.ProductResponse;
 import com.lisseth.inventory.product.domain.models.Product;
@@ -36,6 +37,8 @@ class GetListProductsControllerTest {
         getListProductsController = new GetListProductsController(getListProductsService);
     }
 
+    private final String TOKEN = "Bearer " + JwtUtil.generateToken("admin");
+
     @Test
     void shouldGetAllProductWhenDataIsValidThenReturnProducts() {
         ProductResponse product1 = new ProductResponse(Product.builder()
@@ -56,7 +59,7 @@ class GetListProductsControllerTest {
 
         when(getListProductsService.getAll(0, 10)).thenReturn(productPage);
         final ResponseEntity<JsonApiResponse<List<ProductResponse>>> response = getListProductsController
-                .getProduct(0, 10);
+                .getProduct(TOKEN,0, 10);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -65,6 +68,6 @@ class GetListProductsControllerTest {
     @Test
     void shouldReturnExceptionWhenGetProductThenThrowPersistenceException() {
         when(getListProductsService.getAll(0 , 10)).thenThrow(PersistenceException.class);
-        assertThrows(PersistenceException.class, () -> getListProductsController.getProduct(0 , 10));
+        assertThrows(PersistenceException.class, () -> getListProductsController.getProduct(TOKEN,0 , 10));
     }
 }

@@ -51,4 +51,12 @@ class ValidationExceptionControllerTest {
         assertNotNull(response);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+
+    @Test
+    void testHandleUnauthorizedException() {
+        Exception.UnauthorizedException ex = new Exception.UnauthorizedException("Invalid or expired token");
+        ResponseEntity<JsonApiResponse<Object>> response = validationExceptionController.handleUnauthorizedException(ex);
+        assertNotNull(response);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
 }

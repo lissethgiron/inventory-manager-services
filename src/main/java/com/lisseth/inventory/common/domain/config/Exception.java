@@ -11,4 +11,10 @@ public class Exception {
             super(message);
         }
     }
+
+    public static class UnauthorizedException extends RuntimeException {
+        public UnauthorizedException(String message) {
+            super(message);
+        }
+    }
 }
