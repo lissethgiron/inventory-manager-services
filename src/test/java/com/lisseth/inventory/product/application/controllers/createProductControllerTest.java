@@ -19,17 +19,17 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-class ProductControllerTest {
+class createProductControllerTest {
 
-    private ProductController productController;
+    private CreateProductController productController;
 
     @Mock
-    private CreateProductServicePort createProductServicePort;
+    private CreateProductServicePort createProductService;
 
     @BeforeEach
     public void setUp() {
         openMocks(this);
-        productController = new ProductController(createProductServicePort);
+        productController = new CreateProductController(createProductService);
     }
 
     @Test
@@ -40,7 +40,7 @@ class ProductControllerTest {
                 .price(BigDecimal.valueOf(10000.20))
                 .build();
 
-        when(createProductServicePort.create(any(Product.class))).thenReturn(product);
+        when(createProductService.create(any(Product.class))).thenReturn(product);
         final ResponseEntity<JsonApiResponse<ProductResponse>> response = productController
                 .createProduct(buildProductRequest());
 
@@ -50,7 +50,7 @@ class ProductControllerTest {
 
     @Test
     void shouldReturnExceptionThenThrowPersistenceException() {
-        when(createProductServicePort.create(any(Product.class))).thenThrow(PersistenceException.class);
+        when(createProductService.create(any(Product.class))).thenThrow(PersistenceException.class);
         assertThrows(PersistenceException.class, () -> productController.createProduct(buildProductRequest()));
     }
 

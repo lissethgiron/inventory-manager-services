@@ -2,7 +2,6 @@ package com.lisseth.inventory.product.domain.services;
 
 import com.lisseth.inventory.product.domain.models.Product;
 import com.lisseth.inventory.product.domain.ports.output.CreateProductAdapterPort;
-import com.lisseth.inventory.product.infrastructure.Repositories.ProductRepository;
 import jakarta.persistence.PersistenceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +50,7 @@ class CreateProductServiceTest {
     @Test
     void shouldReturnExceptionThenThrowPersistenceException() {
         when(createProductAdapter.save(any(Product.class))).thenThrow(PersistenceException.class);
-        assertThrows(PersistenceException.class, () -> createProductAdapter.save(Product.builder()
+        assertThrows(PersistenceException.class, () -> createProductService.create(Product.builder()
                 .build()));
     }
 

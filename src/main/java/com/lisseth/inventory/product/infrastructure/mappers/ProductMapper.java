@@ -4,10 +4,14 @@ import com.lisseth.inventory.product.domain.models.Product;
 import com.lisseth.inventory.product.infrastructure.entities.ProductEntity;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
 public class ProductMapper {
+
+    private ProductMapper() {
+    }
 
     public static ProductEntity toEntity(Product entity) {
         ProductEntity productEntity = new ProductEntity();
@@ -20,7 +24,7 @@ public class ProductMapper {
     }
 
     public static Product toDomain(ProductEntity entity) {
-        log.info("adapter entity {}", entity);
+        log.info("toDomain product entity {}", entity.getProductId());
         return Product.builder()
                 .productId(entity.getProductId())
                 .name(entity.getName())

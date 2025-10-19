@@ -14,10 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ProductController {
+public class CreateProductController {
 
     private final CreateProductServicePort createProductService;
 
@@ -26,7 +25,7 @@ public class ProductController {
     public ResponseEntity<JsonApiResponse<ProductResponse>> createProduct(
             @Valid @RequestBody ProductRequest productRequest
     ) {
-        log.info("productRequest {}", productRequest);
+
         Product product = createProductService.create(
                 Product.builder()
                         .name(productRequest.getName())
