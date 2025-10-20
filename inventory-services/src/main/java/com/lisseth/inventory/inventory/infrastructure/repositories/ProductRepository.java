@@ -33,7 +33,7 @@ public class ProductRepository {
     private RuntimeException mapWebClientException(WebClientResponseException ex) {
         return switch (ex.getStatusCode().value()) {
             case 400 -> new Exception.BadRequestException(ex.getMessage());
-            case 404 -> new Exception.NotFoundException(ex.getMessage());
+            case 404 -> new Exception.NotFoundException("Product not found in db product");
             case 401 -> new Exception.UnauthorizedException(ex.getMessage());
             default -> new jakarta.persistence.PersistenceException(ex.getMessage());
         };

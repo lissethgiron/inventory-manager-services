@@ -1,6 +1,5 @@
 package com.lisseth.inventory.inventory.infrastructure.adapters;
 
-import com.lisseth.inventory.common.domain.config.Exception;
 import com.lisseth.inventory.inventory.domain.models.Product;
 import com.lisseth.inventory.inventory.domain.ports.output.GetProductByIdAdapterPort;
 import com.lisseth.inventory.inventory.infrastructure.models.ProductResponse;

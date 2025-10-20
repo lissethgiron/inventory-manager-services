@@ -26,7 +26,7 @@ public class GetStockProductController {
 
     @Operation(summary = "Service to get stock by productId.")
     @GetMapping("/stock/{productId}")
-    public ResponseEntity<JsonApiResponse<InventoryResponse>> GetStock(
+    public ResponseEntity<JsonApiResponse<InventoryResponse>> getStock(
             @RequestHeader(value="Authorization") String authorization,
             @PathVariable("productId") @Valid String productId
     ) {

@@ -4,7 +4,7 @@ import com.lisseth.inventory.inventory.domain.models.Inventory;
 import com.lisseth.inventory.inventory.domain.ports.output.GetStockProductAdapterPort;
 import com.lisseth.inventory.inventory.infrastructure.entities.InventoryEntity;
 import com.lisseth.inventory.inventory.infrastructure.mappers.InventoryMapper;
-import com.lisseth.inventory.inventory.infrastructure.repositories.InventoryRopository;
+import com.lisseth.inventory.inventory.infrastructure.repositories.InventoryRepository;
 import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +17,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GetStockProductAdapter implements GetStockProductAdapterPort {
 
-    private final InventoryRopository inventoryRopository;
+    private final InventoryRepository inventoryRopository;
 
     @Override
     public Optional<Inventory> find(String productId) throws PersistenceException {
         try {
-            Optional<InventoryEntity> optionalInventoryEntity = inventoryRopository.findById(productId);;
+            Optional<InventoryEntity> optionalInventoryEntity = inventoryRopository.findByProductId(productId);;
             return optionalInventoryEntity.map(InventoryMapper::toDomain);
         } catch (jakarta.persistence.PersistenceException ex){
             log.error("find: Error getting inventory");
