@@ -1,0 +1,17 @@
+services:
+  product-services:
+    image: product-services
+    build:
+      context: ./product-services
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+  inventory-services:
+    image: inventory-services
+    build:
+      context: ./inventory-services
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      - product-services

@@ -106,7 +106,7 @@
         </dependency>
     </dependencies>
     <build>
-        <outputDirectory>../target/product-services-3.2.3/WEB-INF/classes</outputDirectory>
+        <outputDirectory>target</outputDirectory>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -14,12 +14,12 @@ public class ProductRepository {
     public ProductResponse getProductById(String productId, String token) {
         log.info("getProductById: {} {}", productId, token);
         WebClient webClient = WebClient.builder()
-                .baseUrl("http://localhost:8080")
+                .baseUrl("http://product-services:8080/product")
                 .build();
         try {
             return webClient
                     .get()
-                    .uri("/product/products/{id}", productId)
+                    .uri("/products/{id}", productId)
                     .header("Authorization", token)
                     .retrieve()
                     .bodyToMono(ProductResponse.class)
