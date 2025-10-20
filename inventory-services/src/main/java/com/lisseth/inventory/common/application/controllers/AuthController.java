@@ -1,7 +1,7 @@
-package com.lisseth.product.common.application.controllers;
+package com.lisseth.inventory.common.application.controllers;
 
-import com.lisseth.product.common.application.controllers.util.JwtUtil;
-import com.lisseth.product.common.application.models.LoginRequest;
+import com.lisseth.inventory.common.application.models.LoginRequest;
+import com.lisseth.inventory.common.application.controllers.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

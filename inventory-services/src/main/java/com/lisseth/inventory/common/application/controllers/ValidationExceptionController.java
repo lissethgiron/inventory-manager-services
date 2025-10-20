@@ -1,7 +1,7 @@
-package com.lisseth.product.common.application.controllers;
+package com.lisseth.inventory.common.application.controllers;
 
-import com.lisseth.product.common.application.models.JsonApiResponse;
-import com.lisseth.product.common.domain.config.Exception;
+import com.lisseth.inventory.common.application.models.JsonApiResponse;
+import com.lisseth.inventory.common.domain.config.Exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -27,6 +27,16 @@ public class ValidationExceptionController {
         });
 
         return ResponseController.error("validate-error", HttpStatus.BAD_REQUEST.value(), errors);
+    }
+
+    @ExceptionHandler(Exception.BadRequestException.class)
+    public ResponseEntity<JsonApiResponse<Object>> handleBadRequestException(Exception.BadRequestException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("status", String.valueOf(HttpStatus.BAD_REQUEST.value()));
+        error.put("title", "Not Found");
+        error.put("detail", ex.getMessage());
+
+        return ResponseController.error("validate-error", HttpStatus.BAD_REQUEST.value(), error);
     }
 
     @ExceptionHandler(Exception.NotFoundException.class)

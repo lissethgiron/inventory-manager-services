@@ -1,4 +1,4 @@
-package com.lisseth.product.common.application.models;
+package com.lisseth.inventory.common.application.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

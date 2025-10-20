@@ -1,6 +1,6 @@
-package com.lisseth.product.common.application.controllers;
+package com.lisseth.inventory.common.application.controllers;
 
-import com.lisseth.product.common.application.models.JsonApiResponse;
+import com.lisseth.inventory.common.application.models.JsonApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
