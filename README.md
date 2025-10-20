@@ -34,9 +34,9 @@
 ### Generar token de autenticación
 
 * Llevandolo a un caso real este servicio iria en otro microservicio
-* Implemente JWT porque permite solicitudes entre servicios de forma segura cumpliendo con el objeto de autenticación entre microservicios
+* Implemente JWT porque permite solicitudes entre servicios de forma segura cumpliendo con el objetivo de autenticación entre microservicios
 
-    
+    ```java
     curl --location 'localhost:8080/product/login?username=admin' \
         --header 'Content-Type: application/json' \
         --data '{
@@ -50,7 +50,7 @@
 
 * Crear un nuevo producto.
 
-
+    ```java
     curl --location 'localhost:8080/product/products' \
     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbSIsImlhdCI6MTc2MDk1MzQ3MSwiZXhwIjoxNzYwOTU3MDcxfQ.go8a8wpmkYUYJ8CW-5iVw1KgzVe43kI0Hyj-fHgeGP0' \
     --header 'Content-Type: application/json' \
@@ -62,20 +62,20 @@
 
 * Obtener un producto específico por ID.
 
-
+    ```java
     curl --location 'localhost:8080/product/products/prod_65cf8dd9-5c2f-465e-b6be-f90becc27950' \
     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbSIsImlhdCI6MTc2MDk0NDU1OSwiZXhwIjoxNzYwOTQ4MTU5fQ.ksVCJlO5vcFZmNd_zn7BtIgi-JaElihw7rVrIwQqkYs'
 
 * Eliminar un producto por ID.
 
-
+    ```java
     curl --location --request DELETE 'localhost:8080/product/products/prod_3061bba4-396d-491c-940d-12ae715a8a05' \
     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbSIsImlhdCI6MTc2MDkxMTgxMSwiZXhwIjoxNzYwOTE1NDExfQ.vP9BcnQQ0bATemb7jq9znP72Dztg1yYt_wxVN6YoCc0'
 
 
 * Actualizar un producto por ID.
 
-
+    ```java
      curl --location --request PUT 'localhost:8080/product/products/prod_3061bba4-396d-491c-940d-12ae715a8a05' \
     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbSIsImlhdCI6MTc2MDkxMTgxMSwiZXhwIjoxNzYwOTE1NDExfQ.vP9BcnQQ0bATemb7jq9znP72Dztg1yYt_wxVN6YoCc0' \
     --header 'Content-Type: application/json' \
@@ -87,7 +87,7 @@
 
 * Listar todos los productos con paginación simple.
 
-
+    ```java
     curl --location 'localhost:8080/product/products?page=0&pageSize=2&=null' \
     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbSIsImlhdCI6MTc2MDkxMTgxMSwiZXhwIjoxNzYwOTE1NDExfQ.vP9BcnQQ0bATemb7jq9znP72Dztg1yYt_wxVN6YoCc0'
         
@@ -95,7 +95,7 @@
 
 * Consultar la cantidad disponible de un producto específico por ID
 
-
+    ```java
     curl --location 'localhost:8081/inventory/stock/prod_63d2100e-7b8e-4d85-8e7d-9ddc11d05064' \
     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbSIsImlhdCI6MTc2MDk1MzQ3MSwiZXhwIjoxNzYwOTU3MDcxfQ.go8a8wpmkYUYJ8CW-5iVw1KgzVe43kI0Hyj-fHgeGP0'
 
@@ -105,7 +105,7 @@
 ## Base de datos
 
 Seleccione una base de datos en memoria debido a su rapidez, facil de usar y perfecta para simular operaciones de almacenamiento temporal,
-permitiendo mayor enfoque en la lógica de negocio y pruebas.
+permitiendome mayor enfoque en la lógica de negocio y pruebas.
 
 ### inventory
 
